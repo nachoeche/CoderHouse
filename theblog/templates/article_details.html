@@ -1,0 +1,93 @@
+{%extends 'base.html'%}
+{% load static %}
+{% block title %}
+    {{posts.title_tag}}
+{% endblock %}
+{% block content %}
+<h1>{{posts.title}} [{{posts.category}}]</h1>
+<small>By {{posts.author.first_name}} {{posts.author.last_name}}
+ - {{posts.author.email}}
+ {% if user.is_authenticated %}
+    {% if user.id == posts.author.id %}
+        <a href="{% url 'update_post' posts.pk %}">(Edit)</a> - 
+        <a href="{% url 'delete_post' posts.pk %}">(Delete)</a>
+    {% endif %}
+{% endif %}
+</small>
+<hr>
+<br/>
+{% if posts.header_image %}
+    <img src={{posts.header_image.url}} height="30%", width="30%"></img>
+{%endif%}
+<p>{{posts.body|safe}}</p>
+<hr>
+<small>{{posts.post_date}}</small>
+<a href="{% url 'home' %}" class="btn btn-secondary">Go Back</a>
+<br></br>
+<form action="{% url 'like_post' posts.pk %}" method="POST">
+    {% csrf_token %}
+    {% if user.is_authenticated %}
+        {% if liked %}
+            <button type="submit", name="post_id", value="{{posts.id}}", class="btn btn-danger btn-sm">
+                Un-Like
+            </button>
+        {% else %}
+            <button type="submit", name="post_id", value="{{posts.id}}", class="btn btn-primary btn-sm">
+                Like
+            </button>
+        {% endif %}
+    {% endif %}
+    <p>{{total_likes}} Likes</p>
+    <!--Profile details - Boostrap "Card"-->
+    {% if posts.author.userprofile %} <!--Maby an user doesn't have a profile yet-->
+        <div class="card mb-3" style="max-width: 50%; background-color: whitesmoke;">
+            <div class="row g-0">
+            <div class="col-md-2 d-flex">
+                
+                {% if  posts.author.userprofile.profile_pic and posts.author.userprofile.profile_pic.url%}
+                    <img src="{{posts.author.userprofile.profile_pic.url}}" , class="img-fluid rounded-circle mx-auto my-auto w-90 h-90">
+                {% else %}
+                    <img src="{% static 'theblog\images\default_profile_pic.png' %}" , class="img-fluid rounded-circle mx-auto my-auto w-90 h-90">
+                {% endif %}
+            </div>
+            <div class="col-md-10">
+                <div class="card-body">
+                <h5 class="card-title">@{{posts.author.username}}</h5>
+                
+                <p><small class="card-text">{{posts.author.userprofile.bio}}</small></p>
+                <p class="card-text"><small class="text-body-secondary">
+                        <a href="{% url 'show_profile_page' posts.author.userprofile.id %}">User Profile</a>
+                    {% if posts.author.userprofile.linkedin_url %}
+                        |
+                        <a href={{posts.author.userprofile.linkedin_url}}>Linkedin</a>
+                    {% endif %}
+                    {% if posts.author.userprofile.facebook_url%}
+                        |
+                        <a href={{posts.author.userprofile.facebook_url}}>Facebook</a>
+                    {% endif %}
+                    {% if posts.author.userprofile.instagram_url %}
+                        |
+                        <a href={{posts.author.userprofile.instagram_url}}>Instagram</a> 
+                    {% endif %}               
+                </small></p>
+                </div>
+            </div>
+            </div>
+        </div>
+    {% else %}
+    <div class="card mb-3" style="max-width: 50%; background-color: whitesmoke;">
+        <div class="row g-0">
+        <div class="col-md-2 d-flex">
+            <img src="{% static 'theblog\images\default_profile_pic.png' %}" , class="img-fluid rounded-circle mx-auto my-auto w-90 h-90">
+        </div>
+        <div class="col-md-10">
+            <div class="card-body">
+            <h5 class="card-title">@{{posts.author.username}}</h5>    
+            <p><small class="card-text">This user doesn't have a profile yet</small></p>
+            </div>
+        </div>
+        </div>
+    </div>
+    {% endif %}       
+</form>
+{%endblock content%}

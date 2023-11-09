@@ -1,0 +1,19 @@
+{%extends 'base.html'%}
+{% block title %}
+    Edit User Settings
+{% endblock %}
+{% block content %}
+
+<h1>Edit User Settings</h1>
+<p>{{user.userprofile.bio}}</p>
+<hr></hr>
+<div class="form-group">
+    <form method="POST">
+        {%csrf_token%}
+        {{form.as_p}}
+        
+        <button class="btn btn-secondary">Save Changes</button>
+    </form>
+</div>
+
+{%endblock%}
