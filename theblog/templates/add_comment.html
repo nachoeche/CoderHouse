@@ -1,0 +1,33 @@
+{%extends 'base.html'%}
+{% block title %}
+    Add Comment
+{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+    <!--
+        Print all posts doing a Loop on a List (ul) as:
+        Title - Author
+        Body
+    -->
+    <h1>Add Comment</h1>
+    <hr></hr>
+    <!--
+        -In order to create a styling on the form, create a forms.py file
+        -Form.media for rich text 
+        -enctype to upload images
+    -->
+    <div class="form-group">
+        <form method="POST">
+            {%csrf_token%}
+            {{form.as_p}}
+            
+            <button class="btn btn-secondary">Post</button>
+        </form>
+    </div>
+    <!--JavaScript to autofill the author's name-->
+
+{% else %}
+    <h1>User not allowed</h1>
+{% endif %}
+
+{%endblock%}

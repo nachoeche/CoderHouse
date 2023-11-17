@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post,Category
+from .models import Post,Category,Comment
 from django import forms
 #To see all categories on the dropdown, create a ("visuable name", "attribute")
 #Setting them in a list so that it's easier to work on
@@ -40,3 +40,15 @@ class EditForm(forms.ModelForm):
 #Search bar
 class SearchForm(forms.Form):
     query = forms.CharField(max_length=100, label='Search')
+
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields=('name','body')
+        #Create a widget to define a CSS(boostrap) class to each field
+        widgets={
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'body': forms.Textarea(attrs={'class': 'form-control'}),
+        }

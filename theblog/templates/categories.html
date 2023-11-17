@@ -21,7 +21,7 @@
             {% endif %}
         </small>
         <br/>
-        {{post.body|slice:":100"}}</li>
+        {{post.body|safe}}</li>
     {% endfor %}
     </ul>
     <a class="btn btn-secondary" href="{% url 'home' %}"> Go Back </a>

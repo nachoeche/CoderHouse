@@ -4,9 +4,9 @@ from django.shortcuts import render,get_object_or_404
 #CreateView: To create a post
 #UpdateView: To update posts
 from django.views.generic import ListView,DetailView, CreateView,UpdateView,DeleteView
-from .models import Post,Category
+from .models import Post,Category,Comment
 #Import the form.py file
-from .forms import PostForm,EditForm
+from .forms import PostForm,EditForm,CommentForm
 #Used to redirect while deleting a post
 from django.urls import reverse_lazy,reverse
 #Used to redirect to same page
@@ -115,3 +115,20 @@ def LikeView(request,pk):
     #Go to article_details/pk
     return HttpResponseRedirect(reverse('article_details',args=[str(pk)]))
 
+class AddCommentView(CreateView):
+    model= Comment
+    #Import the PostForm from Forms file
+    #Since we use this method, we don't have to show them
+    form_class=CommentForm
+    template_name="add_comment.html"
+    #Show all fields
+    #fields="__all__"
+    #Show some fields
+    #fields=('title','body')
+    #success_url=reverse_lazy('home')
+    def form_valid(self,form):
+        form.instance.post_id=self.kwargs['pk']
+        return super().form_valid(form)
+    def get_success_url(self):
+
+        return reverse_lazy('article_details', kwargs={'pk': self.kwargs['pk']})

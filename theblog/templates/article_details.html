@@ -22,11 +22,12 @@
 <p>{{posts.body|safe}}</p>
 <hr>
 <small>{{posts.post_date}}</small>
-<a href="{% url 'home' %}" class="btn btn-secondary">Go Back</a>
+
 <br></br>
 <form action="{% url 'like_post' posts.pk %}" method="POST">
     {% csrf_token %}
     {% if user.is_authenticated %}
+    <p>
         {% if liked %}
             <button type="submit", name="post_id", value="{{posts.id}}", class="btn btn-danger btn-sm">
                 Un-Like
@@ -37,7 +38,27 @@
             </button>
         {% endif %}
     {% endif %}
-    <p>{{total_likes}} Likes</p>
+    {{total_likes}} Likes</p>
+    <hr>
+    {% if not posts.comments.all%}
+        <h2>No coments yet... </h2>
+        <h5><small><a href="{% url 'add_comment' posts.pk %}">Add a Comment!</a></small></h5>
+        <hr>
+
+    {%else%}
+        <h2>Comments...</h2>
+        <h5><small><a href="{%url 'add_comment' posts.pk%}">Add a Comment!</a></small></h5>
+        {%for comment in posts.comments.all %}
+            <strong>{{comment.name}} -
+            {{comment.date_added}}</strong>
+            <br/>
+           {{comment.body}}
+            <hr>
+        {%endfor%}
+       
+    {%endif%}
+    
+    
     <!--Profile details - Boostrap "Card"-->
     {% if posts.author.userprofile %} <!--Maby an user doesn't have a profile yet-->
         <div class="card mb-3" style="max-width: 50%; background-color: whitesmoke;">
