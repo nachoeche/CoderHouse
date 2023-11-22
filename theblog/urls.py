@@ -1,11 +1,12 @@
 from django.urls import path
 #from . import views
 #As the HomeView is a class, we need to import it.
-from .views import HomeView,ArticleDetail,AddPostView,UpdatePostView,DeletePostView,AddCategoryView,CategoryView,LikeView,AddCommentView
+from .views import HomeView,ArticleDetail,AddPostView,UpdatePostView,DeletePostView,AddCategoryView,CategoryView,LikeView,AddCommentView,AboutUs
 
 urlpatterns = [
     #path("",views.home,name="home"),
     path("",HomeView.as_view(),name="home"),
+    path('about_us/', AboutUs, name='about_us'),
     #This will use a Primary key to refer to the link
     path("article/<int:pk>",ArticleDetail.as_view(),name="article_details"),
     path("add_post/",AddPostView.as_view(),name="add_post"),

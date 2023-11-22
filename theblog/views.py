@@ -43,6 +43,9 @@ class HomeView(ListView):
         context["cat_menu"] = cat_menu
         context["search_query"] = search_query
         return context
+def AboutUs(request):
+    #About us
+    return render(request, 'about_us.html')
 #This class uses DetailView since it will show a detail for each post.
 class ArticleDetail(DetailView):
     model = Post

@@ -17,7 +17,7 @@
             In order to create a styling on the form, create a forms.py file
         -->
         <div class="form-group">
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 {%csrf_token%}
                 {{form.media}}
                 {{form.as_p}}

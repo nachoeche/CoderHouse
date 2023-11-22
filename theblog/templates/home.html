@@ -1,6 +1,6 @@
 {%extends 'base.html'%}
 {% block title %}
-    Blog
+    CoderBlog
 {% endblock %}
 {% block content %}
 
@@ -9,26 +9,157 @@
     Title - Author
     Body
 -->
-<h1>Post</h1>
-<ul>
-{% for post in object_list %}
-<!--
-    Reference to article-detail by a href = "{% url {urls name} post.pk}"
-    Adding post.pk helps to move to that particular post.
--->
-    <li><a href="{% url 'article_details' post.pk %}">{{post.title}}</a> <a href="{% url 'category' post.category|slugify %}">[{{post.category}}]</a>
-         - {{post.author.first_name}} {{post.author.last_name}} - {{post.post_date}}
-        <small>
-            {% if user.is_authenticated %}
-                {% if user.id == post.author.id %}
-                    <a href="{% url 'update_post' post.pk %}">(Edit)</a> - 
-                    <a href="{% url 'delete_post' post.pk %}">(Delete)</a>
+{% if user.is_authenticated %}
+<style>
+    body {
+        background-color: #2c3e50;
+        color: #ecf0f1;
+    }
+
+    .jumbotron {
+        background-color: #3498db;
+        color: #ffffff;
+        border-radius: 15px;
+        padding: 20px;
+        margin-top: 50px;
+    }
+
+    h1 {
+        color: #ffffff;
+        font-size: 3.5em;
+    }
+
+    p {
+        font-size: 18px;
+    }
+
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        margin-right: 10px;
+    }
+
+    li a {
+        color: #ffffff;
+    }
+
+    .post {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .comment {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        margin-top: 10px;
+    }
+</style>
+    <h1>Post</h1>
+    <ul>
+    {% for post in object_list %}
+    <!--
+        Reference to article-detail by a href = "{% url {urls name} post.pk}"
+        Adding post.pk helps to move to that particular post.
+    -->
+        <li><a href="{% url 'article_details' post.pk %}">{{post.title}}</a> <a href="{% url 'category' post.category|slugify %}">[{{post.category}}]</a>
+            - {{post.author.first_name}} {{post.author.last_name}} - {{post.post_date}}
+            <small>
+                {% if user.is_authenticated %}
+                    {% if user.id == post.author.id %}
+                        <a href="{% url 'update_post' post.pk %}">(Edit)</a> - 
+                        <a href="{% url 'delete_post' post.pk %}">(Delete)</a>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-        </small>
-    <br/>
-    {{post.post_resume|safe}}</li>
-{% endfor %}
-</ul>
+            </small>
+        <br/>
+        {{post.post_resume|safe}}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>
+            body {
+                background-color: #2c3e50;
+                color: #ecf0f1;
+            }
+
+            .jumbotron {
+                background-color: #3498db;
+                color: #ffffff;
+                border-radius: 15px;
+                padding: 20px;
+                margin-top: 50px;
+            }
+
+            h1 {
+                color: #ffffff;
+                font-size: 3.5em;
+            }
+
+            p {
+                font-size: 18px;
+            }
+
+            .btn-primary {
+                background-color: black;
+                border-color: white;
+                font-size: 1.2em;
+                padding: 10px 20px;
+                margin-top: 20px;
+                color: white; 
+            }
+
+            .btn-primary:hover {
+                background-color: lightblue;
+                border-color: white;
+                color: black;
+            }
+
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            li {
+                display: inline-block;
+                margin-right: 10px;
+            }
+
+            li a {
+                color: #ffffff;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+
+    <body>
+
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">CoderBlog</h1>
+            <p class="lead">CoderBlog es tu espacio personal para compartir momentos, imágenes y conectar con amigos. Publica, interactúa y crea una red social única a tu manera.</p>
+            <ul>
+                <li><a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Login</a></li>
+                <li><a class="btn btn-primary btn-lg" href="{% url 'register' %}" role="button">¡Comienza ahora!</a></li>
+                <li><a class="btn btn-primary btn-lg" href="{% url 'about_us' %}" role="button">About Us</a></li>
+            </ul>
+        </div>
+    </div>
+
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59ELIXI2gg3+1b04me5e0B+L" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+{% endif %}
 
 {%endblock%}

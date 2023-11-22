@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}
+    About Us - CoderBlog
+{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+    </style>
+    </head>
+
+    <body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h1 class="text-center mb-4">About Us</h1>
+                <p>
+                    Welcome to CoderBlog! We are a passionate community of coders and technology enthusiasts who believe in the power of sharing knowledge and experiences. Our platform is designed to be your personal space for connecting with like-minded individuals, sharing memorable moments through posts and images, and fostering a unique social network.
+                </p>
+                <p>
+                    At CoderBlog, we strive to create an inclusive and collaborative environment where creativity and innovation flourish. Whether you are a seasoned coder or just starting your coding journey, you'll find a welcoming community ready to inspire and support you.
+                </p>
+                <p>
+                    Join us today and become a part of the CoderBlog family. Explore, connect, and share your coding adventures with the world!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agregar scripts de Bootstrap y jQuery al final del body para mejorar la carga -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59ELIXI2gg3+1b04me5e0B+L" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+{% endblock %}

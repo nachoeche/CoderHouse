@@ -26,7 +26,7 @@ class PostForm(forms.ModelForm):
 class EditForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields=('title','title_tag','post_resume', 'author','category', 'body')
+        fields=('title','title_tag','post_resume', 'author','category', 'body','header_image')
         #Create a widget to define a CSS(boostrap) class to each field
         widgets={
             'title': forms.TextInput(attrs={'class': 'form-control'}),
