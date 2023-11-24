@@ -41,8 +41,6 @@ class EditForm(forms.ModelForm):
 class SearchForm(forms.Form):
     query = forms.CharField(max_length=100, label='Search')
 
-
-
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment

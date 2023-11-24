@@ -5,6 +5,8 @@ from django.urls import reverse
 from datetime import datetime,date
 from ckeditor.fields import RichTextField
 from django.urls import reverse_lazy,reverse
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 # Create your models here.
 class Category(models.Model):
@@ -15,9 +17,9 @@ class Category(models.Model):
     
     def get_absolute_url(self):
         #Absolute URL of Post will be the post itself
-        return reverse("article_details", args=(str(self.id)))
+        #return reverse("article_details", args=(str(self.id)))
         #This would take to the main page
-        #return reverse('home')
+        return reverse('home')
 
 
 class Post(models.Model):
@@ -65,16 +67,16 @@ class UserProfile(models.Model):
         return reverse('home')
     
 class Comment(models.Model):
-        post=models.ForeignKey(Post,related_name="comments",on_delete=models.CASCADE)
-        name=models.CharField(max_length=255)
-        body=models.TextField()
-        date_added=models.DateField(auto_now_add=True)
+    post=models.ForeignKey(Post,null=True, blank=True,related_name="comments",on_delete=models.CASCADE)
+    name=models.CharField(max_length=255)
+    body=models.TextField()
+    date_added=models.DateField(auto_now_add=True)
+    author=models.ForeignKey(User,null=True, blank=True,related_name="author",on_delete=models.CASCADE)
 
-        def __str__(self):
-            return f"{self.post.title} - {self.name}"
-        
-        def get_success_url(self):
-            return reverse_lazy('post-detail', kwargs={'pk': self.kwargs['pk']})
-        
+    def __str__(self):
+        return f"{self.post.title} - {self.name}"
 
+    def get_success_url(self):
+        return reverse_lazy('article_details', kwargs={'pk': self.post.pk})
+        
 

@@ -1,4 +1,5 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,redirect
+from django.views import View
 #ListBiew: brings all Posts 
 #DetailView: brings the details from a particular one
 #CreateView: To create a post
@@ -131,7 +132,31 @@ class AddCommentView(CreateView):
     #success_url=reverse_lazy('home')
     def form_valid(self,form):
         form.instance.post_id=self.kwargs['pk']
+        form.instance.author = self.request.user if self.request.user.is_authenticated else None
         return super().form_valid(form)
     def get_success_url(self):
 
         return reverse_lazy('article_details', kwargs={'pk': self.kwargs['pk']})
+
+class EditCommentView(View):
+    template_name = 'update_comment.html'
+    
+    def get(self, request, pk):
+        comment = get_object_or_404(Comment, pk=pk)
+        form = CommentForm(instance=comment)
+        return render(request, self.template_name, {'form': form, 'comment': comment})
+
+    def post(self, request, pk):
+        comment = get_object_or_404(Comment, pk=pk)
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            return redirect('article_details', pk=comment.post.id)  # Asegúrate de pasar el ID correcto del post
+        return render(request, self.template_name, {'form': form})
+
+class DeleteCommentView(View):
+    def get(self, request, pk):
+        comment = get_object_or_404(Comment, pk=pk)
+        post_id = comment.post.id
+        comment.delete()
+        return redirect('article_details', pk=post_id)

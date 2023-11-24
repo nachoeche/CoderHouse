@@ -50,10 +50,17 @@
         <h5><small><a href="{%url 'add_comment' posts.pk%}">Add a Comment!</a></small></h5>
         {%for comment in posts.comments.all %}
             <strong>{{comment.name}} -
-            {{comment.date_added}}</strong>
+            {{comment.date_added}} By: @{{comment.author.username}}</strong>
             <br/>
            {{comment.body}}
+           {% if user.is_authenticated and user.username == comment.author.username %}
+
+                <a href="{% url 'update_comment' pk=comment.pk %}">Editar</a>
+
+                <a href="{% url 'delete_comment' pk=comment.pk %}">Eliminar</a>
+            {% endif %}
             <hr>
+            
         {%endfor%}
        
     {%endif%}

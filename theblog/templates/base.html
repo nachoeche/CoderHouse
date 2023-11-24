@@ -49,17 +49,27 @@
                 color: white; 
             }
 
-            .btn-primary:hover {
-                background-color: lightblue;
-                border-color: white;
-                color: black;
-            }
+
 
 
             li a {
                 color: #ffffff;
             }
-            
+            .navbar-nav .dropdown-menu{
+              color: grey;
+              background-color: #2c3e50;
+              border: 1px solid grey;
+              border-width: 5px;
+              border-radius: 15px;
+            }
+            .navbar-nav .dropdown-menu li a {
+              text-decoration: none;
+              margin-left: 20px;
+              color: #ffffff;
+            }
+            .navbar-nav .dropdown-menu .dropdown-item.settings:hover {
+              background-color: transparent !important;
+            }
         </style>
   </head>
   <body>
@@ -86,6 +96,7 @@
                     <ul class="dropdown-menu">
                       {% for cat in cat_menu %}
                         <li><a href="{% url 'category' cat|slugify %}">{{cat}}</a></li>
+                        <hr>
                       {% endfor %}
                     </ul>
                   </li>
@@ -104,13 +115,13 @@
                     @{{user.userprofile.user}}
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{%url 'edit_profile' %}">Edit Settings</a></li>
+                    <li><a class="dropdown-item settings" href="{%url 'edit_profile' %}">Edit Settings</a></li>
                     {% if not user.userprofile.id %}
-                      <li><a class="dropdown-item" href="{% url 'create_profile_page' %}">Create Profile Page</a></li>
+                      <li><a class="dropdown-item settings" href="{% url 'create_profile_page' %}">Create Profile Page</a></li>
                     {% else %}
-                      <li><a class="dropdown-item" href="{%url 'edit_profile_page' user.userprofile.id%}">Edit Profile Page</a></li>
-                      <li><a class="dropdown-item" href="{%url 'show_profile_page' user.userprofile.id%}">Show Profile Page</a></li>
-                      <li><a class="dropdown-item" href="{%url 'logout' %}">Logout</a></li>
+                      <li><a class="dropdown-item settings" href="{%url 'edit_profile_page' user.userprofile.id%}">Edit Profile Page</a></li>
+                      <li><a class="dropdown-item settings" href="{%url 'show_profile_page' user.userprofile.id%}">Show Profile Page</a></li>
+                      <li><a class="dropdown-item settings" href="{%url 'logout' %}">Logout</a></li>
                       
                     {% endif %}
                   </ul>

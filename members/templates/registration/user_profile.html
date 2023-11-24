@@ -15,7 +15,7 @@
 <div class="card mb-3" style="max-width: 50%; background-color: whitesmoke;">
     <div class="row g-0">
       <div class="col-md-2 d-flex">
-        {% if  page_user.profile_pic.url%}
+        {% if  page_user.profile_pic %}
             <img src="{{page_user.profile_pic.url}}" , class="img-fluid rounded-circle mx-auto my-auto w-90 h-90">
         {% else %}
             <img src="{% static 'theblog\images\default_profile_pic.png' %}" , class="img-fluid rounded-circle mx-auto my-auto w-90 h-90">
